@@ -18,8 +18,13 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
+          echo github.event.head_commit.message:
           echo ${{ github.event.head_commit.message }} || true
+          echo
+          echo github.event.commits[0].message:
           echo ${{ github.event.commits[0].message }} || true
+          echo
+          echo github.event.commits.message:
           echo ${{ github.event.commits.message }} || true
         shell: bash {0}
 
