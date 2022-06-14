@@ -18,12 +18,4 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          echo '${{ toJSON(github.event.commits) }}'
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const commits = ${{ toJSON(github.event.commits) }}
-            for (const commit of commits) {
-              console.log(commit);
-            }
-
+          echo '${{ toJSON(github.event.commits) }}' | jq ".[0].author"
