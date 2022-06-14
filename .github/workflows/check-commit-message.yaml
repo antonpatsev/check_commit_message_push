@@ -28,3 +28,4 @@ jobs:
       - name: Check message commits .[].message
         run: |
           echo '${{ toJSON(github.event.commits) }}' | jq ".[].message"
+
