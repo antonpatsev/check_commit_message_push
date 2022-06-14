@@ -18,27 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          echo github.event.head_commit.message:
-          echo ${{ github.event.head_commit.message }} || true
-          echo
-          echo github.event.commits[0].message:
-          echo ${{ github.event.commits[0].message }} || true
-          echo
-          echo github.event.commits[1].message:
-          echo ${{ github.event.commits[1].message }} || true
-          echo
-          echo github.event.commits.message:
-          echo ${{ github.event.commits.message }} || true
-          echo
-          echo github.event.message:
-          echo ${{ github.event.message }} || true
-          echo
-          echo github.event.commits.*.message:
-          commits=${{join(github.event.commits.\*.message, ', ') }}
-          echo $commits
-
-          readarray -t LIST_MESSAGE_COMMITS < <(github.event.commits.\*.message)
-          for MESSAGE_COMMITS in "${LIST_MESSAGE_COMMITS[@]}"
+          for MESSAGE_COMMITS in "${{ github.event.commits.\*.message }}"
           do
               echo "${MESSAGE_COMMITS}"
           done
