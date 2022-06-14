@@ -18,5 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          git log origin/master..HEAD --pretty=format:%s
+          echo ${{ github.event.head_commit.message }} || true
+          echo ${{ github.event.commits[0].message }} || true
+          echo ${{ github.event.commits.message }} || true
         shell: bash {0}
