@@ -19,7 +19,7 @@ jobs:
       - name: Check message commits
         run: |
           #!/bin/bash
-          for MESSAGE_COMMITS in ${{ github.event.commits.*.message }}
+          for MESSAGE_COMMITS in ${{ github.event.commits[*].message }}
           do
               echo "${MESSAGE_COMMITS}"
           done
