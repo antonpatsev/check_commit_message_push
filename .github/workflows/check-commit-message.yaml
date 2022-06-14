@@ -22,3 +22,6 @@ jobs:
           echo ${{ github.event.commits[0].message }} || true
           echo ${{ github.event.commits.message }} || true
         shell: bash {0}
+
+
+
