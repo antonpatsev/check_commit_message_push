@@ -21,7 +21,3 @@ jobs:
           commits=${{ toJSON(github.event.commits.*.message }}
           echo $commits | jq
   
-          for MESSAGE_COMMITS in ${{ github.event.commits[*].message }}
-          do
-              echo "${MESSAGE_COMMITS}"
-          done
