@@ -18,7 +18,12 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          echo '${{ toJSON(github.event.commits) }}' | jq ".[0]"
-
+          echo '${{ toJSON(github.event.commits) }}'
+      - name: Check message commits jq "."
+        run: |
+          echo '${{ toJSON(github.event.commits) }}' | jq "."
+      - name: Check message commits .[]
+        run: |
+          echo '${{ toJSON(github.event.commits) }}' | jq ".[]"
 
 
