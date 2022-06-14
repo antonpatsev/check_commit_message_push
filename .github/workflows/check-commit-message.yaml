@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          commits=${{join(github.event.commits.\*.message, ', ') }}  
+          commits=${{join(github.event.commits.message, ', ') }}
           echo $commits
   
           for MESSAGE_COMMITS in ${{ github.event.commits[*].message }}
