@@ -18,7 +18,6 @@ jobs:
           fetch-depth: 0
       - name: Check message commits
         run: |
-          #!/bin/bash
           for MESSAGE_COMMITS in ${{ github.event.commits[*].message }}
           do
               echo "${MESSAGE_COMMITS}"
