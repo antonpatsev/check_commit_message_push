@@ -24,6 +24,9 @@ jobs:
           echo github.event.commits[0].message:
           echo ${{ github.event.commits[0].message }} || true
           echo
+          echo github.event.commits[1].message:
+          echo ${{ github.event.commits[1].message }} || true
+          echo
           echo github.event.commits.message:
           echo ${{ github.event.commits.message }} || true
         shell: bash {0}
