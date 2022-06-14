@@ -19,6 +19,10 @@ jobs:
       - name: Check message commits
         run: |
           #!/bin/bash
+          
+          commits=${{join(github.event.commits.\*.message, ', ') }}
+          echo $commits
+  
           for MESSAGE_COMMITS in "${{ github.event.commits.*.message }}"
           do
               echo "${MESSAGE_COMMITS}"
