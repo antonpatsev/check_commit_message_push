@@ -20,7 +20,7 @@ jobs:
         run: |
           #!/bin/bash
           
-          commits=${{join(github.event.commits.\*.message, ', ') }}
+          commits=${{join(github.event.commits.*.message, ', ') }}
           echo $commits
   
           for MESSAGE_COMMITS in "${{ github.event.commits.*.message }}"
