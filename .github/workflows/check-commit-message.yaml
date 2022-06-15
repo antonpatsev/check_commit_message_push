@@ -44,6 +44,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Check message commits on pull request
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           # shellcheck source=/dev/null
           source ".env.commit_message_regexp"
