@@ -29,7 +29,7 @@ jobs:
           set -o noclobber # don't overwrite exists files via >
           set -o pipefail  # fails if pipes (|) fails
           # set -o xtrace  # debug
-          readarray -t LIST_MESSAGE_COMMITS < <(${{ toJSON(github.event.commits) }}' | jq ".[].message)
+          readarray -t LIST_MESSAGE_COMMITS < <(${{ toJSON(github.event.commits) }} | jq ".[].message)
           for MESSAGE_COMMITS in "${LIST_MESSAGE_COMMITS[@]}"
           do
             if ! [[ ${MESSAGE_COMMITS} =~ ${REGEX} ]]; then
