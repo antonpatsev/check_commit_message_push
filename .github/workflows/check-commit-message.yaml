@@ -22,9 +22,19 @@ jobs:
         shell: bash {0}
       - name: Check message commits
         run: |
+          REGEX="^([a-z].+\([a-z].+\):\s.*\s\([A-Z].+\)$|Merge branch .*)"
+          set -o errexit   # exit on error
+          set -o nounset   # fail if var undefined
+          set -o noclobber # don't overwrite exists files via >
+          set -o pipefail  # fails if pipes (|) fails
+          # set -o xtrace  # debug
           readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq -r ".[].message")
           for MESSAGE_COMMITS in "${LIST_MESSAGE_COMMITS[@]}"
           do
+            if ! [[ ${MESSAGE_COMMITS} =~ ${REGEX} ]]; then
               echo "Invalid message commit:"
+              echo "${MESSAGE_COMMITS}"
+              exit 1
+            fi
           done
         shell: bash {0}
