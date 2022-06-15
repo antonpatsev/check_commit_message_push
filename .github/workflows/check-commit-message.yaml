@@ -8,21 +8,18 @@ on:
 
 jobs:
 
-  lint_message_commits:
+  on_push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
-      - name: Check message commits .[].message
+      - name: Check message commits on push
+        if: ${{ github.event_name == 'push' }}
         run: |
-          echo '${{ toJSON(github.event.commits) }}' | jq ".[].message"
-        shell: bash {0}
-      - name: Check message commits
-        run: |
-          REGEX="^([a-z].+\([a-z].+\):\s.*\s\([A-Z].+\)$|Merge branch .*)"
+          # shellcheck source=/dev/null
+          source ".env.commit_message_regexp"
           set -o errexit   # exit on error
           set -o nounset   # fail if var undefined
           set -o noclobber # don't overwrite exists files via >
@@ -39,4 +36,26 @@ jobs:
           done
         shell: bash {0}
 
-
+  on_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check message commits on pull request
+        run: |
+          # shellcheck source=/dev/null
+          source ".env.commit_message_regexp"
+          set -o errexit   # exit on error
+          set -o nounset   # fail if var undefined
+          set -o noclobber # don't overwrite exists files via >
+          set -o pipefail  # fails if pipes (|) fails
+          # set -o xtrace  # debug
+          COMMIT_MESSAGE_ERRORS=$(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }} --pretty=format:%s  --grep="${COMMIT_MESSAGE_REGEXP}" --extended-regexp --invert-grep)
+          if [[ "$COMMIT_MESSAGE_ERRORS" ]]; then
+            echo "Format of commit messages is incorrect, regexp : ${COMMIT_MESSAGE_REGEXP}"
+            echo "${COMMIT_MESSAGE_ERRORS}"
+            exit 1
+          fi
+        shell: bash {0}
