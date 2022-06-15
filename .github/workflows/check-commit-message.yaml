@@ -16,17 +16,26 @@ jobs:
         with:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
-      - name: Check message commits
-        run: |
-          echo '${{ toJSON(github.event.commits) }}'
-      - name: Check message commits jq "."
-        run: |
-          echo '${{ toJSON(github.event.commits) }}' | jq "."
-      - name: Check message commits .[]
-        run: |
-          echo '${{ toJSON(github.event.commits) }}' | jq ".[]"
       - name: Check message commits .[].message
         run: |
           echo '${{ toJSON(github.event.commits) }}' | jq ".[].message"
-
-
+        shell: bash {0}
+      - name: Check message commits
+        run: |
+          #!/bin/bash
+          REGEX="^([a-z].+\([a-z].+\):\s.*\s\([A-Z].+\)$|Merge branch .*)"
+          set -o errexit   # exit on error
+          set -o nounset   # fail if var undefined
+          set -o noclobber # don't overwrite exists files via >
+          set -o pipefail  # fails if pipes (|) fails
+          # set -o xtrace  # debug
+          readarray -t LIST_MESSAGE_COMMITS < <(${{ toJSON(github.event.commits) }}' | jq ".[].message)
+          for MESSAGE_COMMITS in "${LIST_MESSAGE_COMMITS[@]}"
+          do
+            if ! [[ ${MESSAGE_COMMITS} =~ ${REGEX} ]]; then
+              echo "Invalid message commit:"
+              echo "${MESSAGE_COMMITS}"
+              exit 1
+            fi
+          done
+        shell: bash {0}
