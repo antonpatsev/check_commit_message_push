@@ -13,17 +13,5 @@ jobs:
         uses: actions/checkout@v3
       - name: Check message commits on push
         run: |
-          # shellcheck source=/dev/null
-          source ".env.commit_message_regexp"
-          #set -o errexit   # exit on error
-          #set -o nounset   # fail if var undefined
-          #set -o noclobber # don't overwrite exists files via >
-          #set -o pipefail  # fails if pipes (|) fails
-          #set -o xtrace  # debug
-          readarray -t LIST_MESSAGE_COMMITS < <(echo "${{ toJSON(github.event.commits) }}" | jq -r ".[].message")
-          if ! [[ "${LIST_MESSAGE_COMMITS[0]}" =~ ${COMMIT_MESSAGE_REGEXP} ]]; then
-            echo "Invalid message commit:"
-            echo "${LIST_MESSAGE_COMMITS[0]}"
-            exit 1
-          fi
+          echo '${{ toJSON(github.event.commits) }}'
         shell: bash {0}
