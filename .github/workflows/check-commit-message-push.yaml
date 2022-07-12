@@ -20,9 +20,10 @@ jobs:
           set -o noclobber # don't overwrite exists files via >
           set -o pipefail  # fails if pipes (|) fails
           # set -o xtrace  # debug
-          if ! [[ '${{ github.event.commits[0].message }}' =~ ${COMMIT_MESSAGE_REGEXP} ]]; then
-            echo "Invalid message commit:"
-            echo '${{ github.event.commits[0].message }}'
-            exit 1
-          fi
+          echo '${{ github.event.commits }}'
+          #if ! [[ '${{ github.event.commits[0].message }}' =~ ${COMMIT_MESSAGE_REGEXP} ]]; then
+            #echo "Invalid message commit:"
+            #echo '${{ github.event.commits[0].message }}'
+            #exit 1
+          #fi
         shell: bash {0}
