@@ -27,7 +27,7 @@ jobs:
             const commits = ${{ toJSON(github.event.commits) }}
             var ERROR_FOUND=0;
             for (const commit of commits) {
-              import {COMMIT_MESSAGE_REGEXP} from './.env.commit_message_regexp';
+              import {COMMIT_MESSAGE_REGEXP} from '.env.commit_message_regexp';
               var firstline = commit.message.trim().split("\n")
               if(firstline[0].match(COMMIT_MESSAGE_REGEXP)){
                 console.log("matched");
