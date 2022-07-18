@@ -28,7 +28,7 @@ jobs:
             var ERROR_FOUND=0;
             for (const commit of commits) {
               var regex = /^([a-z].+(\([a-z].+\))?:\s.*\s\([A-Z].+\)($|\\n.*)|Merge branch .*)/;
-              if(commit.match(regex)){
+              if(commit.message.match(regex)){
                 console.log("matched");
                 console.log(commit.message);
               } else {
