@@ -27,7 +27,7 @@ jobs:
             const commits = ${{ toJSON(github.event.commits) }}
             var ERROR_FOUND=0;
             for (const commit of commits) {
-              var COMMIT_MESSAGE_REGEXP = /^([a-z].+(\([a-z].+\))?:\s.*\s\([A-Z].+\)($|\\n.*)|Merge branch .*)/;
+              const {COMMIT_MESSAGE_REGEXP} = require(".env.commit_message_regexp");
               var firstline = commit.message.trim().split("\n")[0]
               if(!firstline.match(COMMIT_MESSAGE_REGEXP)){
                 console.log("did not match");
@@ -37,6 +37,6 @@ jobs:
                 ERROR_FOUND=1;
               }
             }
-            if(ERROR_FOUND  == 1){
+            if(ERROR_FOUND == 1){
               core.setFailed("Have invalid message commit");
             }
