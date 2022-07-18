@@ -27,9 +27,9 @@ jobs:
             const commits = ${{ toJSON(github.event.commits) }}
             var ERROR_FOUND=0;
             for (const commit of commits) {
-              var regex = /^([a-z].+(\([a-z].+\))?:\s.*\s\([A-Z].+\)($|\\n.*)|Merge branch .*)/;
+              import {COMMIT_MESSAGE_REGEXP} from './.env.commit_message_regexp';
               var firstline = commit.message.trim().split("\n")
-              if(firstline[0].match(regex)){
+              if(firstline[0].match(COMMIT_MESSAGE_REGEXP)){
                 console.log("matched");
                 console.log(commit.message);
                 console.log("firstline[0]:");
