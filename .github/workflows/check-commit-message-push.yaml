@@ -11,7 +11,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Message commits on push
+      - name: Message commits by bash
+        run: |
+          readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq -r ".[].message")
+          for MESSAGE_COMMIT in "${LIST_MESSAGE_COMMITS[@]}"
+          do
+              echo "message commit:"
+              echo "${MESSAGE_COMMIT}"
+          done
+        shell: bash {0}
+      - name: Message commits by script
         uses: actions/github-script@v6
         with:
           script: |
