@@ -26,6 +26,7 @@ jobs:
                 ERROR_FOUND=1;
               }
             }
+            console.log(ERROR_FOUND);
             if(ERROR_FOUND == 1){
               core.setFailed("Have invalid message commit");
             }
