@@ -24,7 +24,7 @@ jobs:
                 console.log("message commit match regex: " + COMMIT_MESSAGE_REGEXP);
               } else {
                 console.log("message commit does not match regex: " + COMMIT_MESSAGE_REGEXP);
-                console.log(commit.message);
+                console.log(firstline);
                 ERROR_FOUND=1;
               }
             }
