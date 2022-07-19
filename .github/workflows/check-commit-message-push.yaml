@@ -20,7 +20,9 @@ jobs:
             for (const commit of commits) {
               const {COMMIT_MESSAGE_REGEXP} = require(".env.commit_message_regexp");
               var firstline = commit.message.trim().split("\n")[0]
-              if(!firstline.match(COMMIT_MESSAGE_REGEXP)){
+              if(firstline.match(COMMIT_MESSAGE_REGEXP)){
+                console.log("message commit match regex: " + COMMIT_MESSAGE_REGEXP);
+              } else {
                 console.log("message commit does not match regex: " + COMMIT_MESSAGE_REGEXP);
                 console.log(commit.message);
                 ERROR_FOUND=1;
