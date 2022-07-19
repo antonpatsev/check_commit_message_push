@@ -24,6 +24,8 @@ jobs:
           ERROR_FOUND=0
           for MESSAGE_COMMIT in "${LIST_MESSAGE_COMMITS[@]}"
           do
+            echo "MESSAGE_COMMIT1-1:"
+            echo ${MESSAGE_COMMIT:1:-1}
             if ! [[ "${MESSAGE_COMMIT:1:-1}" =~ ${COMMIT_MESSAGE_REGEXP} ]]; then
               echo "Invalid message commit, regexp : ${COMMIT_MESSAGE_REGEXP}"
               echo "${MESSAGE_COMMIT}"
