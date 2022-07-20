@@ -20,8 +20,10 @@ jobs:
           set -o noclobber # don't overwrite exists files via >
           set -o pipefail  # fails if pipes (|) fails
           set -o xtrace  # debug
+          echo "COMMIT_MESSAGE_REGEXP:"
           echo ${COMMIT_MESSAGE_REGEXP}
           COMMIT_MESSAGE_REGEXP=$(echo ${COMMIT_MESSAGE_REGEXP} | sed 's/\\n/\\\\n/' )
+          echo "COMMIT_MESSAGE_REGEXP:"
           echo ${COMMIT_MESSAGE_REGEXP}
           readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq ".[].message")
           ERROR_FOUND=0
