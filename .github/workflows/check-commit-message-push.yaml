@@ -26,8 +26,10 @@ jobs:
           echo "COMMIT_MESSAGE_REGEXP:"
           echo ${COMMIT_MESSAGE_REGEXP}
           echo 28
-          readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq ".[].message")
+          echo '${{ toJSON(github.event.commits) }}' | jq ".[].message"
           echo 30
+          readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq ".[].message")
+          echo 32
           ERROR_FOUND=0
           for MESSAGE_COMMIT in "${LIST_MESSAGE_COMMITS[@]}"
           do
