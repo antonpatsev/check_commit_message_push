@@ -25,7 +25,9 @@ jobs:
           COMMIT_MESSAGE_REGEXP=$(echo ${COMMIT_MESSAGE_REGEXP} | sed 's/\\n/\\\\n/' )
           echo "COMMIT_MESSAGE_REGEXP:"
           echo ${COMMIT_MESSAGE_REGEXP}
+          echo 28
           readarray -t LIST_MESSAGE_COMMITS < <(echo '${{ toJSON(github.event.commits) }}' | jq ".[].message")
+          echo 30
           ERROR_FOUND=0
           for MESSAGE_COMMIT in "${LIST_MESSAGE_COMMITS[@]}"
           do
