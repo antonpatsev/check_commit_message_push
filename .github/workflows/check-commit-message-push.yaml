@@ -19,7 +19,7 @@ jobs:
           set -o nounset   # fail if var undefined
           set -o noclobber # don't overwrite exists files via >
           set -o pipefail  # fails if pipes (|) fails
-          # set -o xtrace  # debug
+          set -o xtrace  # debug
           echo ${COMMIT_MESSAGE_REGEXP}
           COMMIT_MESSAGE_REGEXP=$(echo ${COMMIT_MESSAGE_REGEXP} | sed 's/\\n/\\\\n/' )
           echo ${COMMIT_MESSAGE_REGEXP}
